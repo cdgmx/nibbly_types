@@ -50,13 +50,15 @@ export const PetProfileSchema = z.object({
   pet_evaluation: z.string().optional(),
 });
 
+export const PetCatProfileSchema = PetProfileSchema.extend({
+  life_stage: z.nativeEnum(CatLifeStage),
+});
+
 export interface PetProfile extends z.infer<typeof PetProfileSchema> {}
 
 export interface PetProfileDocument extends PetProfile, Models.Document {}
 
-export interface CatPetProfile extends PetProfile {
-  life_stage: CatLifeStage;
-}
+export interface CatPetProfile extends z.infer<typeof PetCatProfileSchema> {}
 
 export interface DogPetProfile extends PetProfile {
   life_stage: DogLifeStage;
