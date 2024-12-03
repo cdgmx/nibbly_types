@@ -47,6 +47,7 @@ export const PetProfileSchema = z.object({
   weight_status: z.nativeEnum(WeightStatus),
   activity_level: z.nativeEnum(ActivityLevel),
   health_conditions: z.array(z.nativeEnum(HealthConditionEnum)),
+  pet_evaluation: z.string().optional(),
 });
 
 export interface PetProfile extends z.infer<typeof PetProfileSchema> {}
@@ -60,3 +61,10 @@ export interface CatPetProfile extends PetProfile {
 export interface DogPetProfile extends PetProfile {
   life_stage: DogLifeStage;
 }
+
+export interface PetEvaluation {
+  high_risk_product_ids: string[];
+  recommended_product_ids: string[];
+}
+
+export interface PetEvaluationDocument extends PetEvaluation, Models.Document {}
