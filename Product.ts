@@ -1,8 +1,6 @@
 import { z } from "zod";
-import {type Models } from "node-appwrite";
-import { AppwriteDocument } from "./Appwrite";
+import { type Models } from "node-appwrite";
 
-// Food catalog structure
 export enum PositiveCatFoodTag {
   KIDNEY_CARE = "kidney-care",
   DIGESTIVE_HEALTH = "digestive-health",
@@ -56,35 +54,43 @@ export enum NegativeCatFoodTag {
   TAURINE = "taurine",
 }
 
-type LifeStage = "kitten" | "adult" | "senior" | "puppy";
+enum ProductLifeStage {
+  KITTEN = "kitten",
+  ADULT = "adult",
+  SENIOR = "senior",
+  PUPPY = "puppy",
+}
 
- enum BreedSize {
+enum BreedSize {
   ALL = "all",
   LARGE = "large",
 }
 
- enum FoodType {
+enum FoodType {
   DRY = "dry",
   WET = "wet",
 }
 
-export const FoodSchema = z.object({
+enum ProductType {
+  FOOD = "food",
+  TOY = "toy",
+}
+
+export const ProductSchema = z.object({
   name: z.string(),
   breed_size: z.nativeEnum(BreedSize),
+  type: z.nativeEnum(ProductType),
   food_type: z.nativeEnum(FoodType),
+  species_id: z.string(),
+  life_stage: z.nativeEnum(ProductLifeStage),
+  price: z.number(),
+  description: z.string(),
   positive_tags: z.array(z.nativeEnum(PositiveCatFoodTag)),
   negative_tags: z.array(z.nativeEnum(NegativeCatFoodTag)),
-}).merge(AppwriteDocument)
+});
 
-export interface Food extends z.infer<typeof FoodSchema> {}
+export interface Product extends z.infer<typeof ProductSchema> {}
 
-// export interface Food {
-//   name: string;
-//   life_stage: LifeStage[];
-//   breed_size: "all" | "large";
-//   food_type: "dry" | "wet";
-//   positive_tags: PositiveCatFoodTag[];
-//   negative_tags: NegativeCatFoodTag[];
-// }
+export interface ProductDocument extends Product, Models.Document {}
 
-export interface CatFood extends Food {}
+export interface CatProduct extends Product {}
