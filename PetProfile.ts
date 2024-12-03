@@ -37,6 +37,8 @@ export enum DogLifeStage {
 }
 
 export const PetProfileSchema = z.object({
+  user_id: z.string().min(1, "User ID is required"),
+  name: z.string().min(1, "Pet name is required").max(50, "Pet name cannot exceed 50 characters").regex(/^[a-zA-Z0-9\s]+$/, "Only alphanumeric characters allowed"),
   life_stage: z.nativeEnum(CatLifeStage),
   weight_status: z.nativeEnum(WeightStatus),
   activity_level: z.nativeEnum(ActivityLevel),
@@ -44,6 +46,8 @@ export const PetProfileSchema = z.object({
 })
 
 export interface PetProfile extends z.infer<typeof PetProfileSchema> {}
+
+export interface PetProfileDocument extends PetProfile, Models.Document {}
 
 export interface CatPetProfile extends PetProfile {
   life_stage: CatLifeStage;
