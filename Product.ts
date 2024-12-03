@@ -87,6 +87,7 @@ export const ProductSchema = z.object({
   description: z.string(),
   positive_tags: z.array(z.nativeEnum(PositiveCatFoodTag)),
   negative_tags: z.array(z.nativeEnum(NegativeCatFoodTag)),
+  image_url: z.string(),
 });
 
 export interface Product extends z.infer<typeof ProductSchema> {}
