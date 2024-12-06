@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { type Models } from "node-appwrite";
+import { PetEvaluationDocumentSchema } from "./PetEvaluation";
 
 export enum HealthConditionEnum {
   KIDNEY_DISEASE = "Kidney Disease",
@@ -47,7 +48,8 @@ export const PetProfileSchema = z.object({
   weight_status: z.nativeEnum(WeightStatus),
   activity_level: z.nativeEnum(ActivityLevel),
   health_conditions: z.array(z.nativeEnum(HealthConditionEnum)),
-  pet_evaluation: z.string().optional(),
+  pet_evaluation:
+    PetEvaluationDocumentSchema.optional() || z.string().optional(),
 });
 
 export const PetCatProfileSchema = PetProfileSchema.extend({
@@ -63,10 +65,3 @@ export interface CatPetProfile extends z.infer<typeof PetCatProfileSchema> {}
 export interface DogPetProfile extends PetProfile {
   life_stage: DogLifeStage;
 }
-
-export interface PetEvaluation {
-  high_risk_product_ids: string[];
-  recommended_product_ids: string[];
-}
-
-export interface PetEvaluationDocument extends PetEvaluation, Models.Document {}
