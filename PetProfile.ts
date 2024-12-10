@@ -48,15 +48,16 @@ export const PetProfileSchema = z.object({
   weight_status: z.nativeEnum(WeightStatus),
   activity_level: z.nativeEnum(ActivityLevel),
   health_conditions: z.array(z.nativeEnum(HealthConditionEnum)),
-  pet_evaluation:
-    PetEvaluationDocumentSchema.optional().or(z.string().optional()),
+  pet_evaluation: PetEvaluationDocumentSchema.optional(),
+});
+
+export const UpdatePetProfileSchema = PetProfileSchema.partial().extend({
+  pet_evaluation: z.string().optional(),
 });
 
 export const PetCatProfileSchema = PetProfileSchema.extend({
   life_stage: z.nativeEnum(CatLifeStage),
 });
-
-
 
 export interface PetProfile extends z.infer<typeof PetProfileSchema> {}
 
