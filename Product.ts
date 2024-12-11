@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { type Models } from "node-appwrite";
+import { type Models } from "appwrite";
 
 export enum PositiveCatFoodTag {
   KIDNEY_CARE = "kidney-care",
